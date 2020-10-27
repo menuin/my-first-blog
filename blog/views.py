@@ -44,8 +44,10 @@ def post_edit(request, pk):
 
 def add_comment_to_post(request,pk):
     post=get_object_or_404(Post,pk=pk)
+    form=CommentForm(request.POST)
+    
     if request.method=="POST":
-        form=CommentForm(request.POST)
+        #form=CommentForm(request.POST)
         if form.is_valid():
             comment=form.save(commit=False)
             comment.post=post
@@ -54,4 +56,7 @@ def add_comment_to_post(request,pk):
         else:
             form=CommentForm()
         return render(request,'blog/add_comment_to_post.html',{'form':form})
+    else:
+        return render(request,'blog/add_comment_to_post.html',{'form':form})
+
 # Create your views here.
